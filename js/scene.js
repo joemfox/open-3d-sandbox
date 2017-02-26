@@ -1,31 +1,4 @@
-// BOILERPLATE
-/*~~~~~~~~~~~~~~~~~
-You can pretty much ignore this section, it's just giving us some utilities to help
-~~~~~~~~~~~~~~~~~~*/
-
-// Detect if webgl is enabled (because if your browser doesn't support it, we can't really help you)
-var Detector = {
-webgl: (function () {
-    try {
-        var canvas = document.createElement( 'canvas' );
-        return !! (window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
-    } catch (e) {
-        return false;
-    }
-})(),
-getWebGLMessage: function() {
-    var errorMsg = document.createElement("div");
-    errorMsg.id = "no-webgl";
-    errorMsg.className = "error-box";
-    errorMsg.innerHTML = "<p>Your browser does not appear to support WebGL. This interactive requires WebGL and a modern browser.</p><p><a target='_blank' href='http://superuser.com/questions/836832/how-can-i-enable-webgl-in-my-browser'>Learn how to enable WebGL in your browser</a></p>";
-    document.body.appendChild(errorMsg);
-},
-is_iOS8: /iPhone OS 8/.test(navigator.userAgent),
-is_mobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
-};
-// ~~~~~~END BOILERPLATE~~~~~~~
-
-// DOM setup
+// DOM SETUP
 /*~~~~~~~~~~~~~~~~~~
 We have to tell our renderer where on the page to put the 3D scene.
 We're going to put it into the div #my-scene.
@@ -34,7 +7,10 @@ domElement = document.getElementById('my-scene');
 sceneWidth = domElement.offsetWidth;
 sceneHeight = domElement.offsetHeight;
 
-// initialization
+
+
+
+// INITIALIZATION
 /*~~~~~~~~~~~~~~~~~~~
 Here's where we set up our scene. This code will only be run one time,
 then the render loop will start. Anything we want in our scene is going
@@ -49,7 +25,7 @@ we need:
 ~~~~~~~~~~~~~~~~~~~*/
 var scene = new THREE.Scene();
 var renderer = new THREE.WebGLRenderer({
-    // alpha:true, // Turn this on if you want a transparent background
+    alpha:true, // Turn this on if you want a transparent background
     // antialiasing:true // Turn this on to smooth the edges of objects (performace may suffer and doesn't work in Firefox)
 });
 // set the pixel ratio of the renderer to match the screen
@@ -78,7 +54,10 @@ function onWindowResize( event ) {
 }
 window.addEventListener( 'resize', onWindowResize, false );
 
-// controls
+
+
+
+// CONTROLS
 /*~~~~~~~~~~~~~~~~~~~~~~
 There are many different three.js control modules. I'm including the following:
 • orbitControls
@@ -89,11 +68,12 @@ If you don't want any controls, remember to comment out controls.update() in the
 var controls = new THREE.OrbitControls(camera, renderer.domElement);
 
 
-// lighting
+
+
+// LIGHTING
 /*~~~~~~~~~~~~~~~~~~~~
 If you don't add lights to your scene, you won't be able to see anything!
 Exception: objects with MeshBasicMaterial do not need light to be visible
-
 I've included various types of lights below. Uncomment what you want to use.
 ~~~~~~~~~~~~~~~~~~~~*/
 
@@ -107,12 +87,20 @@ scene.add(ambientLight)
 
 // spotlight
 var spotLight = new THREE.SpotLight( 0xeeeeee,0.9 ); // (color,intensity)
-spotLight.position.set(30,100,0)
+spotLight.position.set(30,100,-15)
 // spotLight.castShadow = true;
 scene.add(spotLight)
 
+// point light
+// var pointLight = new THREE.PointLight( 0xff0000, 1, 100 );
+// pointLight.position.set( 50, 50, 50 );
+// // spotLight.castShadow = true;
+// scene.add(pointLight);
 
-// objects
+
+
+
+// OBJECTS
 /*~~~~~~~~~~~~~~~~~~~~
 The basic process for adding an object is this:
 1. Define a geometry
@@ -121,10 +109,8 @@ The basic process for adding an object is this:
 4. Tell it where to go (x,y,z position)
 5. Add it to the scene
 
-Three.js has lots of geometries built in, so you can uncomment the block with the shape you want
-below. These are the ones I've built in:
-• sphere
-• TK TK TK
+Three.js has lots of geometries built in, so I'm providing a basic mesh that has many geometries
+commented out. Choose the one you want!
 
 There are also a bunch of models in the models directory that can be imported into your scene.
 They all get imported the same way, so you can just change the file path of the loader
@@ -133,15 +119,64 @@ to one of the following options:
 •TK TK TK 
 ~~~~~~~~~~~~~~~~~~~~*/
 
-// sphere
-var sphere = new THREE.Mesh(
+var mesh = new THREE.Mesh(
+    // GEOMETRIES (PICK ONE)
+    // new THREE.BoxGeometry( 1, 1, 1 ), // (x,y,z length)
     new THREE.SphereGeometry(4,32,32), // (size, vertical subdivisions, horizontal subdivisions)
-    new THREE.MeshLambertMaterial({color:0xfff1e0})
-);
-sphere.position.set(0,0,0)
-scene.add(sphere);
+    // new THREE.CylinderGeometry( 3, 3, 10, 20 ), // (top radius, bottom radius, circle segments, height segments)
+    // new THREE.OctahedronGeometry(2), // (radius)
+    // new THREE.TetrahedronGeometry(2), // (radius)
+    // new THREE.DodecahedronGeometry(2), // (radius)
+    // new THREE.TorusGeometry(5, 2, 8, 16), // (radius, width, radial segments, tube segments)
+    // new THREE.TorusKnotGeometry(5, 2, 30, 16), // (radius, inner radius, radial segments, tube segments)
 
-// render
+    // MATERIALS (PICK ONE)
+    // new THREE.MeshBasicMaterial({color:0xfff1e0})
+    new THREE.MeshLambertMaterial({color:0xfff1e0})
+    // new THREE.MeshPhongMaterial({color:0xfff1e0})
+);
+mesh.position.set(0,0,0)
+// scene.add(mesh);
+
+// var loader = new THREE.ColladaLoader();
+// loader.load(
+//     'models/kershaw-1-4.dae',
+//     function(model){
+//         object = model.scene;
+//         object.scale.set(0.004,0.004,0.004)
+//         scene.add(object);
+//     }
+// )
+
+    var loader = new THREE.ColladaLoader();
+    // loader.options.convertUpAxis = true;
+    // loader.load("js/models/kershaw-v6.dae",function(collada){
+    loader.load("js/models/WineBottle.dae",function(collada){
+
+            var model = collada.scene;
+            scene.add(model);
+
+            // model.position.y = -10;
+            // model.position.x = -1.25;
+            // model.position.z = 1;
+
+            // model.traverse( function ( child ) {
+
+            //     if ( child instanceof THREE.Mesh ) {
+            //         var material = new THREE.MeshBasicMaterial();
+            //         material.map = child.material.map;
+            //         child.material = material;
+            //         child.geometry.computeFaceNormals();
+            //         child.geometry.computeVertexNormals();
+            //         child.geometry.computeBoundingBox();
+            //     }
+
+            // } );
+    });
+
+
+
+// RENDER
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~
 The render loop is the part of the code that makes things happen on the screen.
 This loop is run before *every* frame, so any heavy lifting in here will slow your
