@@ -113,10 +113,6 @@ Three.js has lots of geometries built in, so I'm providing a basic mesh that has
 commented out. Choose the one you want!
 
 There are also a bunch of models in the models directory that can be imported into your scene.
-They all get imported the same way, so you can just change the file path of the loader
-to one of the following options:
-•TK TK TK 
-•TK TK TK 
 ~~~~~~~~~~~~~~~~~~~~*/
 
 var mesh = new THREE.Mesh(
@@ -139,6 +135,7 @@ mesh.position.set(0,0,0)
 // scene.add(mesh);
 
 
+// Load a model and assign one texture to the whole thing
 var object;
 var loader = new THREE.ColladaLoader();
 loader.load(
@@ -151,6 +148,7 @@ loader.load(
     // 'js/models/Ring.dae',
     // 'js/models/pawn.dae',
     'js/models/hollywood_model.dae',
+    // 'js/models/HotDog2.dae',
     // 'js/models/tv.dae',
     function(model){
         object = model.scene;
@@ -168,8 +166,8 @@ loader.load(
     }
 );
 
-var object2;
 // Load a model that has textures assigned (they're in the textures directory)
+var object2;
 var loader = new THREE.ColladaLoader();
 loader.load("js/models/kershaw-v6.dae",function(collada){
 
@@ -201,6 +199,9 @@ scene down. This is where you can make things move or change over time.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 function render() {
     requestAnimationFrame( render );
+
+    // Let's make something move!
+    object.rotation.y += .004
 
     controls.update();
     renderer.render( scene, camera );
