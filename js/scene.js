@@ -44,7 +44,7 @@ domElement.appendChild(renderer.domElement);
 */
 var camera = new THREE.PerspectiveCamera(30,sceneWidth/sceneHeight,1,10000);
 // move the camera backward
-camera.position.z = -40;
+camera.position.z = 40;
 
 // Make it responsive!
 function onWindowResize( event ) {
@@ -87,7 +87,7 @@ scene.add(ambientLight)
 
 // spotlight
 var spotLight = new THREE.SpotLight( 0xeeeeee,0.9 ); // (color,intensity)
-spotLight.position.set(30,100,-15)
+spotLight.position.set(30,100,30)
 // spotLight.castShadow = true;
 scene.add(spotLight)
 
@@ -138,41 +138,58 @@ var mesh = new THREE.Mesh(
 mesh.position.set(0,0,0)
 // scene.add(mesh);
 
-// var loader = new THREE.ColladaLoader();
-// loader.load(
-//     'models/kershaw-1-4.dae',
-//     function(model){
-//         object = model.scene;
-//         object.scale.set(0.004,0.004,0.004)
-//         scene.add(object);
-//     }
-// )
 
-    var loader = new THREE.ColladaLoader();
-    // loader.options.convertUpAxis = true;
-    // loader.load("js/models/kershaw-v6.dae",function(collada){
-    loader.load("js/models/WineBottle.dae",function(collada){
+var object;
+var loader = new THREE.ColladaLoader();
+loader.load(
+    // MODELS (CHOOSE ONE)
+    // 'js/models/WineBottle.dae',
+    // 'js/models/Pyramid.dae',
+    // 'js/models/Octahedron.dae',
+    // 'js/models/Cone.dae',
+    // 'js/models/Soda.dae',
+    // 'js/models/Ring.dae',
+    // 'js/models/pawn.dae',
+    'js/models/hollywood_model.dae',
+    // 'js/models/tv.dae',
+    function(model){
+        object = model.scene;
+        scene.add(object);
 
-            var model = collada.scene;
-            scene.add(model);
+        object.rotation.y -= Math.PI/2
 
-            // model.position.y = -10;
-            // model.position.x = -1.25;
-            // model.position.z = 1;
+        object.traverse(function(child) {
+            if (child instanceof THREE.Mesh) {
+                var material = new THREE.MeshLambertMaterial({color:0xffffff});
+                child.material = material;
+            }
 
-            // model.traverse( function ( child ) {
+        } );
+    }
+);
 
-            //     if ( child instanceof THREE.Mesh ) {
-            //         var material = new THREE.MeshBasicMaterial();
-            //         material.map = child.material.map;
-            //         child.material = material;
-            //         child.geometry.computeFaceNormals();
-            //         child.geometry.computeVertexNormals();
-            //         child.geometry.computeBoundingBox();
-            //     }
+var object2;
+// Load a model that has textures assigned (they're in the textures directory)
+var loader = new THREE.ColladaLoader();
+loader.load("js/models/kershaw-v6.dae",function(collada){
 
-            // } );
-    });
+        object2 = collada.scene;
+        scene.add(object2);
+
+        object2.scale.set(0.002,0.002,0.002)
+        object2.position.set(1,0,1)
+
+        object2.traverse( function ( child ) {
+            if ( child instanceof THREE.Mesh ) {
+                var material = new THREE.MeshBasicMaterial();
+                material.map = child.material.map;
+                child.material = material;
+                child.geometry.computeFaceNormals();
+                child.geometry.computeVertexNormals();
+                child.geometry.computeBoundingBox();
+            }
+        } );
+});
 
 
 
