@@ -3,9 +3,9 @@
 We have to tell our renderer where on the page to put the 3D scene.
 We're going to put it into the div #my-scene.
 ~~~~~~~~~~~~~~~~~~*/
-domElement = document.getElementById('my-scene');
-sceneWidth = domElement.offsetWidth;
-sceneHeight = domElement.offsetHeight;
+var domElement = document.getElementById('my-scene');
+var sceneWidth = domElement.offsetWidth;
+var sceneHeight = domElement.offsetHeight;
 
 
 
@@ -25,14 +25,14 @@ we need:
 ~~~~~~~~~~~~~~~~~~~*/
 var scene = new THREE.Scene();
 var renderer = new THREE.WebGLRenderer({
-    alpha:true, // Turn this on if you want a transparent background
-    // antialiasing:true // Turn this on to smooth the edges of objects (performace may suffer and doesn't work in Firefox)
+    alpha:true, // Leave this on if you want a transparent background
+    // antialiasing:true // Turn this on to smooth the edges of objects (performance may suffer and doesn't work in Firefox)
 });
-// set the pixel ratio of the renderer to match the screen
+// set the pixel ratio of the renderer to match the screen. You need this.
 renderer.setPixelRatio(window.devicePixelRatio);
 // set the size of the renderer to match the DOM element
-renderer.setSize(sceneWidth,sceneHeight);
-// Attach the renderer to the page
+renderer.setSize(sceneWidth, sceneHeight);
+// Attach the renderer to the element we specified earlier
 domElement.appendChild(renderer.domElement);
 
 
@@ -42,8 +42,8 @@ domElement.appendChild(renderer.domElement);
     • near frustum (distance to closest rendered objects)
     • far frustum (distance to farthest rendered objects)
 */
-var camera = new THREE.PerspectiveCamera(30,sceneWidth/sceneHeight,1,10000);
-// move the camera backward
+var camera = new THREE.PerspectiveCamera(30, sceneWidth/sceneHeight, 1, 10000);
+// move the camera back a bit, so it's not at the origin of the scene
 camera.position.z = 40;
 
 // Make it responsive!
@@ -77,7 +77,7 @@ Exception: objects with MeshBasicMaterial do not need light to be visible
 I've included various types of lights below. Uncomment what you want to use.
 ~~~~~~~~~~~~~~~~~~~~*/
 
-// ambient light
+// ambient light: lights all objects equally, regardless of position.
 var ambientLight = new THREE.AmbientLight( 0xeeeeee,0.1 ); // (color,intensity)
 scene.add(ambientLight)
 
@@ -105,7 +105,7 @@ scene.add(spotLight)
 The basic process for adding an object is this:
 1. Define a geometry
 2. Define a material
-3. Make a mesh
+3. Make a "mesh": the geometry plus the material
 4. Tell it where to go (x,y,z position)
 5. Add it to the scene
 
@@ -131,7 +131,7 @@ var mesh = new THREE.Mesh(
     new THREE.MeshLambertMaterial({color:0xfff1e0})
     // new THREE.MeshPhongMaterial({color:0xfff1e0})
 );
-mesh.position.set(0,0,0)
+mesh.position.set(0,0,0);
 // scene.add(mesh);
 
 
