@@ -7,6 +7,8 @@ Open 3D Sandbox
 Download this repo and navigate to its folder in your terminal.
 To start the scene, run `python -m SimpleHTTPServer` and go to `localhost:8000/scene.html` in your browser.
 
+(If you're a python3 person run `python3 -m http.server` instead)
+
 ##What am I doing?
 
 You should be looking at a simple 3-D scene with two models in it. One of the models should have textures. The other should be spinning.
