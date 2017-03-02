@@ -30,6 +30,8 @@ var renderer = new THREE.WebGLRenderer({
 });
 // set the pixel ratio of the renderer to match the screen. You need this.
 renderer.setPixelRatio(window.devicePixelRatio);
+// Set the background of the scene to a Marsy orange/red
+renderer.setClearColor(0xffd4a6);
 // set the size of the renderer to match the DOM element
 renderer.setSize(sceneWidth, sceneHeight);
 // Attach the renderer to the element we specified earlier
@@ -126,9 +128,9 @@ var mesh = new THREE.Mesh(
     // new THREE.TorusKnotGeometry(5, 2, 30, 16), // (radius, inner radius, radial segments, tube segments)
 
     // MATERIALS (PICK ONE)
-    // new THREE.MeshBasicMaterial({color:0xfff1e0})
-    new THREE.MeshLambertMaterial({color:0xfff1e0})
-    // new THREE.MeshPhongMaterial({color:0xfff1e0})
+    // new THREE.MeshBasicMaterial({color:0xfff1e0}) // MeshBasicMaterial: Visible regardless of lighting in scene
+    new THREE.MeshLambertMaterial({color:0xfff1e0}) // MeshLambertMaterial: Requires lighting, is not reflective
+    // new THREE.MeshPhongMaterial({color:0xfff1e0}) //MeshPhongMaterial: Requires lighting, is shiny
 );
 mesh.position.set(0,0,0);
 // scene.add(mesh);
