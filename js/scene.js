@@ -62,7 +62,6 @@ window.addEventListener( 'resize', onWindowResize, false );
 There are many different three.js control modules. I'm including the following:
 • orbitControls
 
-Uncomment the one you want to use, and comment out the rest.
 If you don't want any controls, remember to comment out controls.update() in the render loop
 ~~~~~~~~~~~~~~~~~~~~~~*/
 var controls = new THREE.OrbitControls(camera, renderer.domElement);

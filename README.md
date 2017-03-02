@@ -1,4 +1,5 @@
 #### #NICAR17
+![cool](https://cloud.githubusercontent.com/assets/2977115/23494512/29239c9e-fec8-11e6-9f8c-6500c87d263d.gif)
 
 Open 3D Sandbox
 ======
@@ -28,3 +29,7 @@ Here are some suggestions:
 	13. Make a loop that creates new objects
 
 Having trouble figuring any of these out? Ask for help!
+
+## Who made this?
+
+[Joe Fox](http://twitter.com/joemfox) & [Armand Emamdjomeh](http://twitter.com/emamd)
