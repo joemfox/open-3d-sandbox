@@ -10,8 +10,6 @@ To start the scene, run `python -m SimpleHTTPServer` and go to `localhost:8000/s
 
 You should be looking at a simple 3-D scene with two models in it. One of the models should have textures. The other should be spinning.
 
-##What am I supposed to do with this?
-
 Play with the code and see what things do! Don't worry — you won't break anything. 
 Here are some suggestions:
 1. Change one of the models into something else
